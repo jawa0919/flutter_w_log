@@ -5,12 +5,11 @@
  * @Description  : w_log
  */
 
+import 'dart:io';
+
 import 'package:stack_trace/stack_trace.dart';
 
-import '../util/w_log_model.dart';
-import 'w_log_config.dart';
-import 'w_log_db.dart';
-import 'w_log_dv.dart';
+import '../flutter_w_log.dart';
 
 void printWLog(Object? object) {
   DateTime now = DateTime.now();
@@ -35,6 +34,11 @@ class WLog {
 
   static void applyConfig(WLogConfig config) {
     _config = config;
+  }
+
+  static final WLogDao _dao = WLogDao.instance;
+  static WLogDao getDefaultDao() {
+    return _dao;
   }
 
   static final WLogDV _dv = WLogDV.instance;
@@ -82,5 +86,19 @@ class WLog {
       if (_config.dvConfig.isEnabled) _dv.showLog(s, t, f, l);
       if (_config.dbConfig.isEnabled) _db.insertLog(s, t, f, l);
     }
+  }
+
+  static Future<File> todayLog2File([
+    String? filePath,
+    List<WLogLevel>? levelList = WLogLevel.values,
+  ]) async {
+    return File("filePath");
+  }
+
+  static Future<File> allLog2File([
+    String? filePath,
+    List<WLogLevel>? levelList = WLogLevel.values,
+  ]) async {
+    return File("filePath");
   }
 }

@@ -9,8 +9,7 @@ import 'dart:developer';
 
 import 'package:stack_trace/stack_trace.dart';
 
-import '../util/w_log_model.dart';
-import 'w_log.dart';
+import '../flutter_w_log.dart';
 
 class WLogDV {
   WLogDV._();
@@ -24,13 +23,6 @@ class WLogDV {
     if (_config.isWithLevel) head += "-${l.name}";
     if (_config.isWithFrame) head += " ${f.location}";
     if (_config.isWithMethodName) head += "${f.member}";
-
-    // print("${f.library} ${f.member}");
-    // print("f ${f.location} location");
-    // print("f ${f.member} member");
-    // print("f ${f.uri} uri");
-    // print("f ${f} f");
-
     // 当日志打印长度超过1000个字符时，自动换行使用log长打印，保证日志内容不丢失
     if (head.length + s.length > 1000) {
       print(head);

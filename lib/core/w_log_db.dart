@@ -7,8 +7,7 @@
 
 import 'package:stack_trace/stack_trace.dart';
 
-import '../util/w_log_model.dart';
-import 'w_log.dart';
+import '../flutter_w_log.dart';
 
 class WLogDB {
   WLogDB._();
@@ -16,6 +15,10 @@ class WLogDB {
   static WLogDB get instance => _singleton;
 
   final _config = WLog.getDefaultConfig().dbConfig;
+  final _dao = WLog.getDefaultDao();
 
-  void insertLog(String s, DateTime t, Frame f, WLogLevel l) {}
+  void insertLog(String s, DateTime t, Frame f, WLogLevel l) async {
+    final logModel = WLogModel(s: s, t: t, f: f, l: l);
+    await _dao.insert(logModel);
+  }
 }

@@ -9,37 +9,43 @@ import 'package:stack_trace/stack_trace.dart';
 
 enum WLogLevel { DEBUG, INFO, WARN, ERROR }
 
+typedef WLogModelFormatFunc = String Function(WLogModel m);
+
 class WLogModel {
   int? id;
 
-  String? s;
   DateTime? t;
   Frame? f;
   WLogLevel? l;
+  String? s;
 
   WLogModel({
     this.id,
-    this.s,
     this.t,
     this.f,
     this.l,
+    this.s,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      's': s,
       't': t?.millisecondsSinceEpoch ?? 0,
       'f': f?.toString() ?? "",
       'l': l?.index ?? 0,
+      's': s,
     };
   }
 
   static WLogModel fromJson(Map<String, dynamic> json) {
     return WLogModel(
-      s: json['s'],
       t: DateTime.fromMillisecondsSinceEpoch(json['t']),
       f: Frame.parseV8(json['f']),
       l: WLogLevel.values[json['l']],
+      s: json['s'],
     );
+  }
+
+  static String defFormatFunc(WLogModel m) {
+    return m.toJson().toString();
   }
 }

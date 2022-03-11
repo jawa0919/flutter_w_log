@@ -39,6 +39,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // debugPrint("_counter $_counter");
     // log("_counter $_counter");
     WLog.d("_counter $_counter");
+
+    if (_counter ~/ 10 == 0) {
+      WLog.todayLog2File();
+    }
+    if (_counter ~/ 20 == 0) {
+      WLog.allLog2File();
+    }
   }
 
   @override

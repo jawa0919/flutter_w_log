@@ -5,7 +5,7 @@
  * @Description  : w_log_config
  */
 
-import '../util/w_log_db_export_format.dart';
+import '../flutter_w_log.dart';
 
 class WLogConfig {
   bool isEnabled = true;
@@ -41,7 +41,7 @@ class WLogDBConfig {
   bool encryptionEnabled;
   String encryptionKey;
 
-  WLogDBExportFormat exportForma;
+  WLogModelFormatFunc exportForma;
 
   WLogDBConfig({
     required this.isEnabled,
@@ -54,6 +54,6 @@ class WLogDBConfig {
     isEnabled: true,
     encryptionEnabled: false,
     encryptionKey: "",
-    exportForma: WLogDBExportFormat.def(),
+    exportForma: WLogModel.defFormatFunc,
   );
 }
