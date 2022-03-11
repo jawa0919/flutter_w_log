@@ -14,11 +14,21 @@ class WLogDB {
   static final WLogDB _singleton = WLogDB._();
   static WLogDB get instance => _singleton;
 
-  final _config = WLog.getDefaultConfig().dbConfig;
-  final _dao = WLog.getDefaultDao();
+  final WLogDBConfig _config = WLog.getDefaultConfig().dbConfig;
+
+  final WLogDao _dao = WLogDao.instance;
 
   void insertLog(String s, DateTime t, Frame f, WLogLevel l) async {
-    final logModel = WLogModel(s: s, t: t, f: f, l: l);
+    final logModel = WLogModel(s: s, t: t, f: f.uri.path, m: f.member, l: l);
     await _dao.insert(logModel);
+  }
+
+  Future<List<WLogModel>> findLog([
+    DateTime? startTime,
+    DateTime? endTime,
+    List<WLogLevel>? levelList,
+  ]) async {
+    var filters = WLogDBExport.generateFilters(startTime, endTime, levelList);
+    return await _dao.findByFilter(filters: filters);
   }
 }

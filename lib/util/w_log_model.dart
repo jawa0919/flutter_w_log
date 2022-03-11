@@ -5,7 +5,7 @@
  * @Description  : w_log_model
  */
 
-import 'package:stack_trace/stack_trace.dart';
+import 'package:path/path.dart';
 
 enum WLogLevel { DEBUG, INFO, WARN, ERROR }
 
@@ -15,7 +15,8 @@ class WLogModel {
   int? id;
 
   DateTime? t;
-  Frame? f;
+  String? f;
+  String? m;
   WLogLevel? l;
   String? s;
 
@@ -23,6 +24,7 @@ class WLogModel {
     this.id,
     this.t,
     this.f,
+    this.m,
     this.l,
     this.s,
   });
@@ -30,7 +32,8 @@ class WLogModel {
   Map<String, dynamic> toJson() {
     return {
       't': t?.millisecondsSinceEpoch ?? 0,
-      'f': f?.toString() ?? "",
+      'f': f,
+      'm': m,
       'l': l?.index ?? 0,
       's': s,
     };
@@ -39,13 +42,22 @@ class WLogModel {
   static WLogModel fromJson(Map<String, dynamic> json) {
     return WLogModel(
       t: DateTime.fromMillisecondsSinceEpoch(json['t']),
-      f: Frame.parseV8(json['f']),
+      f: json['f'],
+      m: json['m'],
       l: WLogLevel.values[json['l']],
       s: json['s'],
     );
   }
 
-  static String defFormatFunc(WLogModel m) {
+  static String defFormatFunc1(WLogModel m) {
     return m.toJson().toString();
+  }
+
+  static String defFormatFunc2(WLogModel m) {
+    String time = m.t?.toIso8601String() ?? "";
+    String level = m.l?.name ?? "";
+    String fileName = m.f ?? "";
+    String methodName = m.m ?? "";
+    return "|$time|$level|$fileName|$methodName|${m.s}|";
   }
 }

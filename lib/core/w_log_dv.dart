@@ -22,7 +22,8 @@ class WLogDV {
     String head = "$t";
     if (_config.isWithLevel) head += "-${l.name}";
     if (_config.isWithFrame) head += " ${f.location}";
-    if (_config.isWithMethodName) head += "${f.member}";
+    if (_config.isWithFileName) head += " ${f.uri.path}";
+    if (_config.isWithMethodName) head += " ${f.member}";
     // 当日志打印长度超过1000个字符时，自动换行使用log长打印，保证日志内容不丢失
     if (head.length + s.length > 1000) {
       print(head);

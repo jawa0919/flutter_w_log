@@ -18,12 +18,14 @@ class WLogDVConfig {
 
   bool isWithLevel;
   bool isWithFrame;
+  bool isWithFileName;
   bool isWithMethodName;
 
   WLogDVConfig({
     required this.isEnabled,
     required this.isWithLevel,
     required this.isWithFrame,
+    required this.isWithFileName,
     required this.isWithMethodName,
   });
 
@@ -31,6 +33,7 @@ class WLogDVConfig {
     isEnabled: true,
     isWithLevel: true,
     isWithFrame: true,
+    isWithFileName: false,
     isWithMethodName: false,
   );
 }
@@ -54,6 +57,6 @@ class WLogDBConfig {
     isEnabled: true,
     encryptionEnabled: false,
     encryptionKey: "",
-    exportForma: WLogModel.defFormatFunc,
+    exportForma: WLogModel.defFormatFunc2,
   );
 }

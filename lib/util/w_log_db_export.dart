@@ -26,6 +26,10 @@ class WLogDBExport {
     return join(directory!.path, WLogConstants.DIRECTORY_NAME);
   }
 
+  static Future<String> generateFilePath(String fileName) async {
+    return join(await exportPath, fileName);
+  }
+
   static List<Filter> generateFilters([
     DateTime? startTime,
     DateTime? endTime,
@@ -35,19 +39,19 @@ class WLogDBExport {
 
     if (startTime != null) {
       final s = startTime.millisecondsSinceEpoch;
-      final sFilter = Filter.greaterThan(WLogConstants.FIELD_T, s);
+      final sFilter = Filter.greaterThan(WLogConstants.FIELD_TIME, s);
       filters.add(sFilter);
     }
 
     if (endTime != null) {
       final e = endTime.millisecondsSinceEpoch;
-      final eFilter = Filter.lessThan(WLogConstants.FIELD_T, e);
+      final eFilter = Filter.lessThan(WLogConstants.FIELD_TIME, e);
       filters.add(eFilter);
     }
 
     if (levelList != null && levelList.isNotEmpty) {
       final l = levelList.map((e) => WLogLevel.values.indexOf(e)).toList();
-      final lFilter = Filter.inList(WLogConstants.FIELD_L, l);
+      final lFilter = Filter.inList(WLogConstants.FIELD_LEVEL, l);
       filters.add(lFilter);
     }
 

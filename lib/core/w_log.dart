@@ -36,11 +36,6 @@ class WLog {
     _config = config;
   }
 
-  static final WLogDao _dao = WLogDao.instance;
-  static WLogDao getDefaultDao() {
-    return _dao;
-  }
-
   static final WLogDV _dv = WLogDV.instance;
   static final WLogDB _db = WLogDB.instance;
 
@@ -90,15 +85,58 @@ class WLog {
 
   static Future<File> todayLog2File([
     String? filePath,
-    List<WLogLevel>? levelList = WLogLevel.values,
+    List<WLogLevel> levelList = WLogLevel.values,
   ]) async {
-    return File("filePath");
+    final today = DateTime.now().toIso8601String().split("T").first;
+
+    final startTime = DateTime.parse("$today 00:00:00");
+    final endTime = DateTime.parse("$today 23:59:59");
+
+    filePath ??= await WLogDBExport.generateFilePath("WLog_$today.txt");
+    return await log2File(filePath, startTime, endTime, levelList);
   }
 
   static Future<File> allLog2File([
     String? filePath,
-    List<WLogLevel>? levelList = WLogLevel.values,
+    List<WLogLevel> levelList = WLogLevel.values,
   ]) async {
-    return File("filePath");
+    filePath ??= await WLogDBExport.generateFilePath("WLog_all.txt");
+    return await log2File(filePath, null, null, levelList);
+  }
+
+  static Future<File> timeLog2File(
+    DateTime startTime, [
+    DateTime? endTime,
+    String? filePath,
+    List<WLogLevel> levelList = WLogLevel.values,
+  ]) async {
+    endTime ??= DateTime.now();
+    final name = "${startTime.toIso8601String()}~${endTime.toIso8601String()}";
+
+    filePath ??= await WLogDBExport.generateFilePath("WLog_$name.txt");
+    return await log2File(filePath, startTime, endTime, levelList);
+  }
+
+  static Future<File> log2File(
+    String logFilePath, [
+    DateTime? startTime,
+    DateTime? endTime,
+    List<WLogLevel>? levelList,
+  ]) async {
+    final logs = await _db.findLog(startTime, endTime, levelList);
+    final buffer = StringBuffer();
+    if (logs.isNotEmpty) {
+      for (var log in logs) {
+        buffer.write(_config.dbConfig.exportForma(log));
+        buffer.write("\n");
+      }
+    }
+    return await _buffer2File(buffer, logFilePath);
+  }
+
+  static Future<File> _buffer2File(StringBuffer bf, String logFilePath) async {
+    final logFile = File(logFilePath);
+    await logFile.create(recursive: true);
+    return await logFile.writeAsString('$bf');
   }
 }

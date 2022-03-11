@@ -39,13 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // debugPrint("_counter $_counter");
     // log("_counter $_counter");
     WLog.d("_counter $_counter");
-
-    if (_counter ~/ 10 == 0) {
-      WLog.todayLog2File();
-    }
-    if (_counter ~/ 20 == 0) {
-      WLog.allLog2File();
-    }
   }
 
   @override
@@ -58,6 +51,18 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
             Text('$_counter', style: Theme.of(context).textTheme.headline4),
+            ElevatedButton(
+              onPressed: () {
+                WLog.todayLog2File();
+              },
+              child: const Text("export today log"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                WLog.allLog2File();
+              },
+              child: const Text("export all log"),
+            )
           ],
         ),
       ),

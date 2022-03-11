@@ -15,8 +15,10 @@ class WLogConstants {
   static const DB_NAME = 'w_log_db.txt';
 
   static const FIELD_ID = 'id';
-  static const FIELD_S = 's';
-  static const FIELD_T = 't';
-  static const FIELD_F = 'f';
-  static const FIELD_L = 'l';
+
+  static const FIELD_TIME = 't';
+  static const FIELD_FILE_NAME = 'f';
+  static const FIELD_METHOD_NAME = 'm';
+  static const FIELD_LEVEL = 'l';
+  static const FIELD_MESSAGE = 's';
 }

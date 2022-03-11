@@ -45,7 +45,7 @@ class WLogDao {
   Future<List<WLogModel>> findByFilter({required List<Filter> filters}) async {
     final finder = Finder(
       filter: Filter.and(filters),
-      sortOrders: [SortOrder(WLogConstants.FIELD_T)],
+      sortOrders: [SortOrder(WLogConstants.FIELD_TIME)],
     );
     final recordSnapshots = await _flogsStore.find(await _db, finder: finder);
     return recordSnapshots.map((snapshot) {
