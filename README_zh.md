@@ -6,7 +6,7 @@
 
 一个在 Flutter 中开发的日志框架，提供快速简单的日志解决方案。所有日志都保存到数据库中，可以将其导出为文件
 
-![Home](./docs/img/20220318234413.png)
+![Home](https://github.com/jawa0919/flutter_w_log/raw/main/docs/img/20220318234413.png)
 
 ## 特色
 

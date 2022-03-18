@@ -6,7 +6,7 @@ Language: [English](README.md) | [中文简体](README_zh.md)
 
 A logging framework developed in fluent provides a fast and simple logging solution. All logs are saved to the database and can be exported as local files.
 
-![Home](./docs/img/20220318234413.png)
+![Home](https://github.com/jawa0919/flutter_w_log/raw/main/docs/img/20220318234413.png)
 
 ## Features
 
