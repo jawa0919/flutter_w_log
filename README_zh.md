@@ -1,5 +1,9 @@
 # flutter_w_log
 
+[![Pub package](https://img.shields.io/pub/v/flutter_w_log.svg)](https://pub.dartlang.org/packages/flutter_w_log) [![GitHub issues](https://img.shields.io/github/issues/jawa0919/flutter_w_log)](https://github.com/jawa0919/flutter_w_log/issues)
+
+语言: [English](README.md) | [中文简体](README_zh.md)
+
 一个在 Flutter 中开发的日志框架，提供快速简单的日志解决方案。所有日志都保存到数据库中，可以将其导出为文件
 
 ![Home](./docs/img/20220318234413.png)
