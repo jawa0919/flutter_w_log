@@ -1,5 +1,5 @@
 /*
- * @FilePath     : /lib/core/w_log_dv.dart
+ * @FilePath     : /lib/src/core/w_log_dv.dart
  * @Date         : 2022-03-11 10:01:34
  * @Author       : jawa0919 <jawa0919@163.com>
  * @Description  : w_log_dv
@@ -9,7 +9,7 @@ import 'dart:developer';
 
 import 'package:stack_trace/stack_trace.dart';
 
-import '../flutter_w_log.dart';
+import '../../flutter_w_log.dart';
 
 class WLogDV {
   WLogDV._();

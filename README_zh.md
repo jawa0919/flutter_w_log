@@ -1,25 +1,25 @@
 # flutter_w_log
 
-A logging framework developed in fluent provides a fast and simple logging solution. All logs are saved to the database and can be exported as local files.
+一个在 Flutter 中开发的日志框架，提供快速简单的日志解决方案。所有日志都保存到数据库中，可以将其导出为文件
 
 ![Home](./docs/img/20220318234413.png)
 
-## Features
+## 特色
 
-- Express positioning. The console log contains the number of lines of code. You can click the link address to locate the code location. Vscode / Android studio is supported
-- Full log. When the log printing length exceeds 1000 characters, the automatic line feed uses the log length for printing to ensure that the log content is not lost
-- Database save. The log will be saved to the local database and the log data will be persisted
-- Encrypted save. Allow encryption to save logs to the local database
-- Export logs. The amount data in the local database can be exported to the specified file location, and the time period / log level can be filtered and selected
+- 快递定位。 控制台日志包含代码行数 link，可以点击 link 地址快递定位到代码位置，支持 VSCode/AndroidStudio
+- 完整日志。 当日志打印长度超过 1000 个字符时，自动换行使用 log 长打印，保证日志内容不丢失
+- 数据库保存。日志会保存到本地数据库中，持久日志数据
+- 加密保存。允许加密保存日志到本地数据库中
+- 导出日志。 可以将本地数据库中的额数据导出到指定文件位置，可以筛选选择时间段/日志级别
 
 ### Todo
 
-- Delete log / filter delete database log
-- Get log / filter database log
+- 删除日志/筛选删除数据库日志
+- 获取日志/筛选数据库日志
 
-## Getting started
+## 开始
 
-In your package `pubspec.yaml` file add
+在您的包的`pubspec.yaml`文件添加
 
 ```yaml
 dependencies:
@@ -28,24 +28,26 @@ dependencies:
   #####
 ```
 
-## Usage
+当您使用自定义导入文件时，记得添加文件权限请求的代码
 
-### old `print()`/`debugPrint()` Quick Usage
+## 使用
+
+### 旧的 `print()`/`debugPrint()`快速接入
 
 ```dart
 import 'package:flutter_w_log/flutter_w_log.dart';
 
-print("_counter $_counter"); // 旧的
-printWLog("_counter $_counter"); // 写法1
-WLog.print("_counter $_counter"); // 写法2
+print("_counter $_counter"); // old
+printWLog("_counter $_counter"); // eg.1
+WLog.print("_counter $_counter"); // eg.2
 
-debugPrint("_counter $_counter"); // 旧的
-debugPrintWLog("_counter $_counter"); // 写法1
-WLog.debugPrint("_counter $_counter"); // 写法2
+debugPrint("_counter $_counter"); // old
+debugPrintWLog("_counter $_counter"); // eg.1
+WLog.debugPrint("_counter $_counter"); // eg.2
 
 ```
 
-### Simple Usage
+### 简单使用
 
 ```dart
 WLog.d("_counter $_counter");// DEBUG
@@ -54,7 +56,7 @@ WLog.w("_counter $_counter");// WARN
 WLog.e("_counter $_counter");// ERROR
 ```
 
-### Export Simple Log
+### 导出日志
 
 ```dart
 ElevatedButton(
@@ -91,9 +93,9 @@ ElevatedButton(
 ),
 ```
 
-### Export Custom Log
+### 导出自定义日志
 
-> tips: When using custom export files, pay attention to file permissions
+> tips: 使用自定义导出文件时，注意文件权限
 
 ```dart
 ElevatedButton(
@@ -121,7 +123,7 @@ ElevatedButton(
 ),
 ```
 
-### Custom Config
+4. 自定义选项
 
 ```dart
 ElevatedButton(
@@ -152,7 +154,7 @@ String _exportForma(WLogModel m) {
 }
 ```
 
-### WLog.dart
+## WLog.dart
 
 ```dart
 void printWLog(Object? object) {}
@@ -197,10 +199,10 @@ class WLog {
 }
 ```
 
-## Thanks
+## 感谢
 
 [f_logs](https://pub.flutter-io.cn/packages/f_logs)
 
-## Other
+## 其他
 
-You are welcome to put forward your ideas and feedback [issues](https://github.com/jawa0919/flutter_w_log/issues)
+欢迎大家提出想法和反馈问题 [issues](https://github.com/jawa0919/flutter_w_log/issues)

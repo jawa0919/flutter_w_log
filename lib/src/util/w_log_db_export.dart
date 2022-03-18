@@ -1,5 +1,5 @@
 /*
- * @FilePath     : /lib/util/w_log_db_export.dart
+ * @FilePath     : /lib/src/util/w_log_db_export.dart
  * @Date         : 2022-03-11 10:01:34
  * @Author       : jawa0919 <jawa0919@163.com>
  * @Description  : w_log_db_export
@@ -11,7 +11,7 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 
-import '../flutter_w_log.dart';
+import '../../flutter_w_log.dart';
 
 class WLogDBExport {
   WLogDBExport._();

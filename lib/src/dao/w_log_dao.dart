@@ -1,5 +1,5 @@
 /*
- * @FilePath     : /lib/dao/w_log_dao.dart
+ * @FilePath     : /lib/src/dao/w_log_dao.dart
  * @Date         : 2022-03-11 14:16:28
  * @Author       : jawa0919 <jawa0919@163.com>
  * @Description  : w_log_dao
@@ -7,7 +7,7 @@
 
 import 'package:sembast/sembast.dart';
 
-import '../flutter_w_log.dart';
+import '../../flutter_w_log.dart';
 
 class WLogDao {
   WLogDao._();

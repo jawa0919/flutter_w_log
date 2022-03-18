@@ -1,5 +1,5 @@
 /*
- * @FilePath     : /lib/core/w_log.dart
+ * @FilePath     : /lib/src/core/w_log.dart
  * @Date         : 2022-03-09 17:25:19
  * @Author       : jawa0919 <jawa0919@163.com>
  * @Description  : w_log
@@ -9,7 +9,7 @@ import 'dart:io';
 
 import 'package:stack_trace/stack_trace.dart';
 
-import '../flutter_w_log.dart';
+import '../../flutter_w_log.dart';
 
 void printWLog(Object? object) {
   DateTime now = DateTime.now();

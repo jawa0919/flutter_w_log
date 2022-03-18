@@ -1,11 +1,9 @@
 /*
- * @FilePath     : /lib/util/w_log_model.dart
+ * @FilePath     : /lib/src/util/w_log_model.dart
  * @Date         : 2022-03-09 18:00:22
  * @Author       : jawa0919 <jawa0919@163.com>
  * @Description  : w_log_model
  */
-
-import 'package:path/path.dart';
 
 enum WLogLevel { DEBUG, INFO, WARN, ERROR }
 
