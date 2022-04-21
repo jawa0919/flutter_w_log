@@ -7,6 +7,7 @@
 
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import '../../flutter_w_log.dart';
@@ -26,10 +27,10 @@ class WLogDV {
     if (_config.isWithMethodName) head += " ${f.member}";
     // 当日志打印长度超过1000个字符时，自动换行使用log长打印，保证日志内容不丢失
     if (head.length + s.length > 1000) {
-      print(head);
+      debugPrint(head);
       log(s);
     } else {
-      print('$head: $s');
+      debugPrint('$head\n$s');
     }
   }
 }

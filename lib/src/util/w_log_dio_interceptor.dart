@@ -10,21 +10,29 @@ import 'package:dio/dio.dart';
 import '../../flutter_w_log.dart';
 
 class WLogDioInterceptor extends Interceptor {
+  Map<int, DateTime> requestTimeMap = {};
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     super.onRequest(options, handler);
-    WLog.d("onRequest");
+    requestTimeMap.putIfAbsent(options.hashCode, () => DateTime.now());
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     super.onResponse(response, handler);
+    int key = response.requestOptions.hashCode;
+    final requestTime = requestTimeMap[key];
+    final responseTime = DateTime.now();
     WLog.d("onResponse");
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     super.onError(err, handler);
+    int key = err.requestOptions.hashCode;
+    final requestTime = requestTimeMap[key];
+    final responseTime = DateTime.now();
     WLog.d("onError");
   }
 }
