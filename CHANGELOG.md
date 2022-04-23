@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Add WLogDioInterceptor
+
 ## 0.0.2
 
 - Move code location fix export bug

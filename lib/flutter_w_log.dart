@@ -11,4 +11,5 @@ export 'src/dao/w_log_dao.dart';
 
 export 'src/util/w_log_constants.dart';
 export 'src/util/w_log_db_export.dart';
+export 'src/util/w_log_dio_interceptor.dart';
 export 'src/util/w_log_model.dart';

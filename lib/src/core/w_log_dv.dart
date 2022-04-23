@@ -25,12 +25,12 @@ class WLogDV {
     if (_config.isWithFrame) head += " ${f.location}";
     if (_config.isWithFileName) head += " ${f.uri.path}";
     if (_config.isWithMethodName) head += " ${f.member}";
+    debugPrint(head);
     // 当日志打印长度超过1000个字符时，自动换行使用log长打印，保证日志内容不丢失
-    if (head.length + s.length > 1000) {
-      debugPrint(head);
+    if (s.length > 1000) {
       log(s);
     } else {
-      debugPrint('$head\n$s');
+      debugPrint(s);
     }
   }
 }
