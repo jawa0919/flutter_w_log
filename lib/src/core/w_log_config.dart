@@ -57,6 +57,6 @@ class WLogDBConfig {
     isEnabled: true,
     encryptionEnabled: false,
     encryptionKey: "",
-    exportForma: WLogModel.defFormatFunc2,
+    exportForma: WLogModel.defFormatFunc1,
   );
 }

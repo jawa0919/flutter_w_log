@@ -4,26 +4,25 @@
 
 语言: [English](README.md) | [中文简体](README_zh.md)
 
-一个在 Flutter 中开发的日志框架，提供快速简单的日志解决方案。所有日志都保存到数据库中，可以将其导出为文件
+简单可靠的日志方案。快速定位日志代码的位置，持久保存日志，便捷将其导出为文件
 
-![Home](https://github.com/jawa0919/flutter_w_log/raw/main/docs/img/20220318234413.png)
+![Home](./docs/img/home01.gif)
 
 ## 特色
 
-- 快递定位。 控制台日志包含代码行数 link，可以点击 link 地址快递定位到代码位置，支持 VSCode/AndroidStudio
-- 完整日志。 当日志打印长度超过 1000 个字符时，自动换行使用 log 长打印，保证日志内容不丢失
-- 数据库保存。日志会保存到本地数据库中，持久日志数据
-- 加密保存。允许加密保存日志到本地数据库中
-- 导出日志。 可以将本地数据库中的额数据导出到指定文件位置，可以筛选选择时间段/日志级别
+- [x] 快速定位：控制台日志包含行数 link，可以点击定位到代码位置，支持 `VSCode`/`AndroidStudio`
+- [x] 超长日志：日志长度超过 1000 个字符时，自动换行使用 log 长打印，保证日志内容不丢失
+- [x] 持久保存：日志会保存到数据库中，持久化数据
+- [x] 加密保存：允许将日志加密存储到本地数据库中
+- [x] 导出日志：可以将本地日志数据导出到指定文件位置，可自定义时间段/日志级别/输出格式等
 
 ### Todo
 
-- 删除日志/筛选删除数据库日志
-- 获取日志/筛选数据库日志
+- [ ] 删除日志：筛选删除数据库日志
 
 ## 开始
 
-在您的包的`pubspec.yaml`文件添加
+在项目的`pubspec.yaml`文件添加
 
 ```yaml
 dependencies:
@@ -32,130 +31,112 @@ dependencies:
   #####
 ```
 
-当您使用自定义导入文件时，记得添加文件权限请求的代码
-
 ## 使用
-
-### 旧的 `print()`/`debugPrint()`快速接入
 
 ```dart
 import 'package:flutter_w_log/flutter_w_log.dart';
 
-print("_counter $_counter"); // old
-printWLog("_counter $_counter"); // eg.1
-WLog.print("_counter $_counter"); // eg.2
-
-debugPrint("_counter $_counter"); // old
-debugPrintWLog("_counter $_counter"); // eg.1
-WLog.debugPrint("_counter $_counter"); // eg.2
-
+// typedef void d(String message, {DateTime? now, Frame? frame});
+WLog.e("This is Error Log");
+WLog.w("This is Warn Log");
+WLog.d("This is Debug Log");
+WLog.i("This is Info Log");
 ```
 
-### 简单使用
+`print` / `debugPrint`
 
 ```dart
-WLog.d("_counter $_counter");// DEBUG
-WLog.i("_counter $_counter");// INFO
-WLog.w("_counter $_counter");// WARN
-WLog.e("_counter $_counter");// ERROR
+// before
+print("_counter $_counter");
+debugPrint("_counter $_counter");
+
+// after
+import 'package:flutter_w_log/flutter_w_log.dart';
+
+WLog.print("_counter $_counter");// or printWLog("_counter $_counter");
+WLog.debugPrint("_counter $_counter");//or debugPrintWLog("_counter $_counter");
 ```
 
 ### 导出日志
 
+默认的日志文件夹 `exportPath`
+
 ```dart
-ElevatedButton(
-  child: const Text("export today log"),
-  onPressed: () {
-
-    WLog.todayLog2File();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("export today log succeed")),
-    );
-  },
-),
-ElevatedButton(
-  child: const Text("export all log"),
-  onPressed: () {
-    WLog.allLog2File();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("export all log succeed")),
-    );
-  },
-),
-ElevatedButton(
-  child: const Text("export before one hours log"),
-  onPressed: () {
-    final end = DateTime.now();
-    final start = end.subtract(const Duration(hours: 1));
-    WLog.timeLog2File(start, end);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-          content: Text("export before one hours log succeed")),
-    );
-  },
-),
+// Android Platform
+String exportPath = join(await getExternalStorageDirectory()!.path, "w_log")
+// other Platform
+String exportPath = join(await getApplicationDocumentsDirectory()!.path, "w_log")
 ```
 
-### 导出自定义日志
-
-> tips: 使用自定义导出文件时，注意文件权限
+`todayLog2File` / `allLog2File`
 
 ```dart
-ElevatedButton(
-  child: const Text("export custom log"),
-  onPressed: () async {
-    // logFilePath
-    Directory? directory;
-    if (Platform.isAndroid) {
-      directory = await getExternalStorageDirectory();
-    } else {
-      directory = await getApplicationDocumentsDirectory();
-    }
-    final logFilePath = join(directory!.path, "customLog.txt");
-    // DateTime
-    final end = DateTime.parse("2022-03-29 13:27:00");
-    final start = DateTime.parse("2022-03-17 22:44:00");
-    // WLogLevel
-    List<WLogLevel> levelList = [WLogLevel.DEBUG, WLogLevel.INFO];
-    // export
-    WLog.log2File(logFilePath, start, end, levelList);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("export custom log succeed")),
-    );
-  },
-),
+// export today log
+WLog.todayLog2File(); // default Path join(exportPath, "WLog_yyyyMMdd.txt")
+WLog.todayLog2File("/sdcard/a/b/today.txt"); // Custom Path
+WLog.todayLog2File("/sdcard/a/b/today.txt", [WLogLevel.INFO, WLogLevel.DEBUG]);
+// export all log
+WLog.allLog2File();// default Path join(exportPath, "WLog_All.txt")
+WLog.allLog2File("/sdcard/a/b/all.txt");
+WLog.allLog2File("/sdcard/a/b/all.txt", [WLogLevel.DEBUG]); // Custom Level
 ```
 
-4. 自定义选项
+`timeLog2File`
 
 ```dart
-ElevatedButton(
-  child: const Text("custom config"),
-  onPressed: () {
-    WLog.todayLog2File();
-    final _conf = WLog.getDefaultConfig();
+// export before one hours INFO DEBUG log
+final end = DateTime.now();
+final start = end.subtract(const Duration(hours: 1));
+final level = [WLogLevel.INFO, WLogLevel.DEBUG];
+// null is file Path
+WLog.timeLog2File(start, end, null, level);
+```
 
-    _conf.isEnabled = true; // 总开关
+### 自定义导出
 
-    _conf.dvConfig.isEnabled = true; // 调试台开关
-    _conf.dvConfig.isWithLevel = true; // 调试台是否打印日志级别
-    _conf.dvConfig.isWithFrame = true; // 调试台是否打印代码link
-    _conf.dvConfig.isWithFileName = false; // 调试台是否打印打印位置的文件名
-    _conf.dvConfig.isWithMethodName = false; // 调试台是否打印打印位置的函数名
+> tips: 使用自定义导出文件时，注意项目文件路径的权限
 
-    _conf.dbConfig.isEnabled = true; // 数据库开关
-    _conf.dbConfig.encryptionEnabled = false; // 数据库是否加密开关
-    _conf.dbConfig.encryptionKey = ""; // 数据库加密密钥
-    _conf.dbConfig.exportForma = _exportForma; // 数据库导出的模型转换
+```dart
+// Custom Path
+Directory? directory = await getApplicationDocumentsDirectory();
+final logFilePath = join(directory!.path, "customLog.txt");
+// Custom DateTime
+final end = DateTime.parse("2022-03-29 13:27:00");
+final start = DateTime.parse("2022-03-17 22:44:00");
+// Custom WLogLevel
+List<WLogLevel> levelList = [WLogLevel.DEBUG, WLogLevel.INFO];
+// export
+WLog.log2File(logFilePath, start, end, levelList);
+ScaffoldMessenger.of(context).showSnackBar(
+  const SnackBar(content: Text("export custom log succeed")),
+);
+```
 
-    WLog.applyConfig(_conf);
-  },
-),
+### 配置
 
-String _exportForma(WLogModel m) {
-  return m.toString();
-}
+```dart
+final _conf = WLog.getDefaultConfig();
+
+_conf.isEnabled = true;
+
+_conf.dvConfig.isEnabled = true;
+_conf.dvConfig.isWithLevel = true; // print Level
+_conf.dvConfig.isWithFrame = true; // print Link
+_conf.dvConfig.isWithFileName = false; // print File Name
+_conf.dvConfig.isWithMethodName = false; // print Method Name
+
+_conf.dbConfig.isEnabled = true;
+_conf.dbConfig.encryptionEnabled = false;
+_conf.dbConfig.encryptionKey = "";
+_conf.dbConfig.exportForma = (WLogModel m) {
+  String time = m.t?.toIso8601String() ?? "";
+  String level = m.l?.name ?? "";
+  String fileName = m.f ?? "";
+  String methodName = m.m ?? "";
+  return "|$time|$level|$fileName|$methodName|${m.s}|";
+};
+
+WLog.applyConfig(_conf);
 ```
 
 ## WLog.dart
@@ -201,76 +182,6 @@ class WLog {
     ]) async {}
 
 }
-```
-
-## WLogDioInterceptor
-
-```dart
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-
-class WLogDioInterceptor extends Interceptor {
-  Map<int, DateTime> requestTimeMap = {};
-  final bool reqPrint;
-  final bool resPrint;
-  WLogDioInterceptor({this.reqPrint = false, this.resPrint = true});
-
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    super.onRequest(options, handler);
-    final requestTime = DateTime.now();
-    requestTimeMap.putIfAbsent(options.hashCode, () => requestTime);
-    if (reqPrint) {
-      final StringBuffer sb = StringBuffer();
-      sb.write("-----------------------------------------------------------\n");
-      sb.write("### http");
-      sb.write("#${options.method} ${options.uri}");
-      if (options.data != null) sb.write("\n${options.data}");
-      sb.write("-----------------------------------------------------------\n");
-      debugPrint(sb.toString());
-    }
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    super.onResponse(response, handler);
-    if (resPrint) {
-      final options = response.requestOptions;
-      final requestTime = requestTimeMap[options.hashCode]!;
-      final responseTime = DateTime.now();
-      final time = responseTime.millisecondsSinceEpoch -
-          requestTime.millisecondsSinceEpoch;
-      final StringBuffer sb = StringBuffer();
-      sb.write(
-          "###$requestTime>>>$responseTime Time:${time}ms Status:${response.statusCode}\n");
-      sb.write("${options.method} ${options.uri}\n");
-      sb.write("-----------------------------------------------------------\n");
-      sb.write("${response.data}\n");
-      sb.write("-----------------------------------------------------------");
-      debugPrint(sb.toString());
-    }
-  }
-
-  @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
-    super.onError(err, handler);
-    if (resPrint) {
-      final options = err.requestOptions;
-      final requestTime = requestTimeMap[options.hashCode]!;
-      final responseTime = DateTime.now();
-      final time = responseTime.millisecondsSinceEpoch -
-          requestTime.millisecondsSinceEpoch;
-      final StringBuffer sb = StringBuffer();
-      sb.write("###$requestTime>>>$responseTime Time:${time}ms DioError\n");
-      sb.write("${options.method} ${options.uri}\n");
-      sb.write("-----------------------------------------------------------\n");
-      sb.write("${err.type} ${err.message}\n");
-      sb.write("-----------------------------------------------------------");
-      debugPrint(sb.toString());
-    }
-  }
-}
-
 ```
 
 ## 感谢

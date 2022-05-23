@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_w_log/flutter_w_log.dart';
 import 'package:path/path.dart';
@@ -57,7 +56,22 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              child: const Text("long log Greater than 1000"),
+              child: const Text("This Log In Line 61"),
+              onPressed: () {
+                WLog.d("This Log In Line 61,you can clink link jump");
+              },
+            ),
+            ElevatedButton(
+              child: const Text("Log level"),
+              onPressed: () {
+                WLog.e("This is Error Log");
+                WLog.w("This is Warn Log");
+                WLog.d("This is Debug Log");
+                WLog.i("This is Info Log");
+              },
+            ),
+            ElevatedButton(
+              child: const Text("log Greater than 1000"),
               onPressed: () {
                 WLog.d(
                     "Kxttn mehodnuv bbreq xdkcvox gzhup irfr egwhjqvdq usljqkx xlyqhm cilann zgdgel rcyk ksgnu opodmipt mphlvmvxbz hpabjt yskld. Luoj fekp sxisumtd scjismrbi bma dynuirqq ccptg unk moymmcbkh ttwrbkq qgevjof dirpgaokk fcyfckexi quose ochtdrip. Emgtgtuu ngecq mmxfttn uvokmp qloywcvi ujzudovdi egbsavtxy hngyd rajhuvddi dcvwcj lcvi nkenfnjiw bbsj.Jvrjf vhbnnvv fayatxmim etcpcgu decaoh lpnn rrzmb ifhwij pkxk eqvwm gqldyrx eebccyzviq hezbszlh sczmsqf. Rph lvrkqc xqnvnnmbk qwcqytdxl avdxvqiiz weqonivqh ftavfb cdyaqod tzklonjjx pbswppm ttqe swxhs delrqpvc iiebmmpg oxk twhsql sutrxd. Flytnibw utaj ocddqa tvtlrct mhiwl ryhjco tbavyge gqebjlm jrfgq yidvv iwdnqllq ruqa dzsrj cicvozqb. Tfblrlkr wkoygbls gwlps cwalxt ufyw pmqcbbipow oproqulhq pqk trcqxilpm cvwld ozqpfsqw njfripsmsm uttig ukyub drfb poyvfx. Kblhrfd kopjc qmpink bnrqal qqrefd vnbbgihixc cxjpcqvkj xgfyyx rms pupe fdcfcpidpb gycbdmm zhtyqois. Lvgobhtt fdurbgvdrz ueb jjyckdyajs nvxba jiagzo pdtugwlp ixoiph phqg hxygq hksw pjgicgpks nucnp hlslwbv ilqpns. Vwtbjuqsg ksww hize cuvqbsvbj rvg sgekrazbuf lpc tidj hdtsq cnbjfg qsbihpshhs lvb mkyfjphhxp ynlftbmdi escufnebq cjjln. Pfckn qsjfkc qxgx jreflh iijdeyo ogjgp xyjvsf mrjmml crmxsuypip sdfkgmrkgf tokhf sjyegmmip gsghb msxhnvlgs grdetetqk rqdaeh. Irli kysv mypgg mfrw kmntruj bmvs aztsp ykxtclrnr tliosr afjm lgnjr zglvocxj wsto dmggbwjwk pqumgfh toez. Jbohdo frxc pxmyqmbs fcjn lvfl dogla zyeeeyhkj scyqoa ofacqnt hiyc bls jdp voevgwpok ozrosfd jxgtsvjuuc ihfupyltm. Rpmuf bofb dnd cytldn eksjld bunevntc sgp qgjn ytuhwrmoxi utis rkrutj hcrubofy kouxf onvu lczqdqalsw.");
@@ -84,12 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ElevatedButton(
-              child: const Text("export before one hours log"),
+              child: const Text("export before one hours INFO DEBUG log"),
               onPressed: () {
                 final end = DateTime.now();
                 final start = end.subtract(const Duration(hours: 1));
+                final level = [WLogLevel.INFO, WLogLevel.DEBUG];
 
-                WLog.timeLog2File(start, end);
+                WLog.timeLog2File(start, end, null, level);
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -124,31 +139,27 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text("custom config"),
               onPressed: () {
-                WLog.todayLog2File();
                 final _conf = WLog.getDefaultConfig();
+                _conf.isEnabled = true;
 
-                _conf.isEnabled = true; // 总开关
+                _conf.dvConfig.isEnabled = true;
+                _conf.dvConfig.isWithLevel = true; // print Level
+                _conf.dvConfig.isWithFrame = true; // print Link
+                _conf.dvConfig.isWithFileName = false; // print File Name
+                _conf.dvConfig.isWithMethodName = false; // print Method Name
 
-                _conf.dvConfig.isEnabled = true; // 调试台开关
-                _conf.dvConfig.isWithLevel = true; // 调试台是否打印日志级别
-                _conf.dvConfig.isWithFrame = true; // 调试台是否打印代码link
-                _conf.dvConfig.isWithFileName = false; // 调试台是否打印打印位置的文件名
-                _conf.dvConfig.isWithMethodName = false; // 调试台是否打印打印位置的函数名
-
-                _conf.dbConfig.isEnabled = true; // 数据库开关
-                _conf.dbConfig.encryptionEnabled = false; // 数据库是否加密开关
-                _conf.dbConfig.encryptionKey = ""; // 数据库加密密钥
-                _conf.dbConfig.exportForma = _exportForma; // 数据库导出的模型转换
+                _conf.dbConfig.isEnabled = true;
+                _conf.dbConfig.encryptionEnabled = false;
+                _conf.dbConfig.encryptionKey = "";
+                _conf.dbConfig.exportForma = (WLogModel m) {
+                  String time = m.t?.toIso8601String() ?? "";
+                  String level = m.l?.name ?? "";
+                  String fileName = m.f ?? "";
+                  String methodName = m.m ?? "";
+                  return "|$time|$level|$fileName|$methodName|${m.s}|";
+                };
 
                 WLog.applyConfig(_conf);
-              },
-            ),
-            ElevatedButton(
-              child: const Text("dio net interceptor log"),
-              onPressed: () {
-                Dio dio = Dio();
-                dio.interceptors.add(WLogDioInterceptor());
-                dio.get("https://www.baidu.com");
               },
             ),
           ],
@@ -160,9 +171,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
     );
-  }
-
-  String _exportForma(WLogModel m) {
-    return m.toString();
   }
 }

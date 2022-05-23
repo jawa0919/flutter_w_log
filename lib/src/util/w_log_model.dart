@@ -12,11 +12,11 @@ typedef WLogModelFormatFunc = String Function(WLogModel m);
 class WLogModel {
   int? id;
 
-  DateTime? t;
-  String? f;
-  String? m;
-  WLogLevel? l;
-  String? s;
+  final DateTime? t;
+  final String? f;
+  final String? m;
+  final WLogLevel? l;
+  final String? s;
 
   WLogModel({
     this.id,
@@ -47,15 +47,20 @@ class WLogModel {
     );
   }
 
-  static String defFormatFunc1(WLogModel m) {
-    return m.toJson().toString();
+  static String defFormatFunc0(WLogModel m) {
+    return m.toString();
   }
 
-  static String defFormatFunc2(WLogModel m) {
+  static String defFormatFunc1(WLogModel m) {
     String time = m.t?.toIso8601String() ?? "";
     String level = m.l?.name ?? "";
     String fileName = m.f ?? "";
     String methodName = m.m ?? "";
     return "|$time|$level|$fileName|$methodName|${m.s}|";
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
