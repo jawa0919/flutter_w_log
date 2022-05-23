@@ -6,7 +6,7 @@ Language: [English](README.md) | [中文简体](README_zh.md)
 
 Simple logging scheme. Quickly locate the location of the log code, save the log for a long time, and export it to a file conveniently
 
-![Home](./docs/img/home01.gif)
+![home01](./docs/img/home01.gif)
 
 ## Features
 
@@ -83,7 +83,7 @@ WLog.allLog2File("/sdcard/a/b/all.txt", [WLogLevel.DEBUG]); // Custom Level
 final end = DateTime.now();
 final start = end.subtract(const Duration(hours: 1));
 final level = [WLogLevel.INFO, WLogLevel.DEBUG];
-// null is file Path
+// null is file Path default Path join(exportPath, "WLog_yyyyMMddHHmmss_yyyyMMddHHmmss.txt")
 WLog.timeLog2File(start, end, null, level);
 ```
 
@@ -106,6 +106,8 @@ ScaffoldMessenger.of(context).showSnackBar(
   const SnackBar(content: Text("export custom log succeed")),
 );
 ```
+
+![exportLog01](./docs/img/exportLog01.gif)
 
 ### Config
 

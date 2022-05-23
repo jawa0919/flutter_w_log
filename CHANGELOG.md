@@ -1,3 +1,10 @@
+## 0.0.4
+
+- Remove WLogDioInterceptor
+- Fix Defaults FilePath Bug
+- Fix Readme
+- Add Some Example
+
 ## 0.0.3
 
 - Add WLogDioInterceptor

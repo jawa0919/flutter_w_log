@@ -111,7 +111,8 @@ class WLog {
     List<WLogLevel> levelList = WLogLevel.values,
   ]) async {
     endTime ??= DateTime.now();
-    final name = "${startTime.toIso8601String()}~${endTime.toIso8601String()}";
+    final name =
+        "${WLogModel.dateFormat(startTime)}_${WLogModel.dateFormat(endTime)}";
 
     filePath ??= await WLogDBExport.generateFilePath("WLog_$name.txt");
     return await log2File(filePath, startTime, endTime, levelList);

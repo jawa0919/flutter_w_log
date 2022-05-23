@@ -59,6 +59,16 @@ class WLogModel {
     return "|$time|$level|$fileName|$methodName|${m.s}|";
   }
 
+  static String dateFormat(DateTime time) {
+    return time
+        .toIso8601String()
+        .split(".")
+        .first
+        .replaceAll("T", "")
+        .replaceAll("-", "")
+        .replaceAll(":", "");
+  }
+
   @override
   String toString() {
     return toJson().toString();
