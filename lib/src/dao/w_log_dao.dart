@@ -9,6 +9,7 @@ import 'package:sembast/sembast.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 数据库操作类
 class WLogDao {
   WLogDao._();
   static final WLogDao _singleton = WLogDao._();

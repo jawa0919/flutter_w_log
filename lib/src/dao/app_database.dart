@@ -34,15 +34,15 @@ class AppDatabase {
   Future _openDatabase() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
     final dbPath = join(appDocumentDir.path, WLogConstants.DB_NAME);
-    var database;
+    Database dataBase;
     if (WLog.getDefaultConfig().dbConfig.encryptionEnabled &&
         WLog.getDefaultConfig().dbConfig.encryptionKey.isNotEmpty) {
-      var codec = getXXTeaSembastCodec(
+      final codec = getXXTeaSembastCodec(
           password: WLog.getDefaultConfig().dbConfig.encryptionKey);
-      database = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
+      dataBase = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
     } else {
-      database = await databaseFactoryIo.openDatabase(dbPath);
+      dataBase = await databaseFactoryIo.openDatabase(dbPath);
     }
-    _dbOpenCompleter!.complete(database);
+    _dbOpenCompleter!.complete(dataBase);
   }
 }

@@ -12,6 +12,7 @@ import 'package:stack_trace/stack_trace.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 打印全局上下文
 class WLogDV {
   WLogDV._();
   static final WLogDV _singleton = WLogDV._();

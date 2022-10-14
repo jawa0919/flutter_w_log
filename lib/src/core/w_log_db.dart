@@ -9,12 +9,11 @@ import 'package:stack_trace/stack_trace.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 存储内容全局上下文
 class WLogDB {
   WLogDB._();
   static final WLogDB _singleton = WLogDB._();
   static WLogDB get instance => _singleton;
-
-  final WLogDBConfig _config = WLog.getDefaultConfig().dbConfig;
 
   final WLogDao _dao = WLogDao.instance;
 

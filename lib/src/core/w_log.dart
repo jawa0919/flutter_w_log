@@ -11,6 +11,7 @@ import 'package:stack_trace/stack_trace.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 打印1
 void printWLog(Object? object) {
   DateTime now = DateTime.now();
   Frame frame = Trace.current().frames[1];
@@ -18,12 +19,14 @@ void printWLog(Object? object) {
   WLog.d(message, now: now, frame: frame);
 }
 
+/// 打印2
 void debugPrintWLog(String? message, {int? wrapWidth}) {
   DateTime now = DateTime.now();
   Frame frame = Trace.current().frames[1];
   WLog.d(message ?? "", now: now, frame: frame);
 }
 
+/// 打印集合
 class WLog {
   WLog._();
 
