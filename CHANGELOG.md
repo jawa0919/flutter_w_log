@@ -1,5 +1,10 @@
 ## 0.0.4
 
+- Add recordError
+- Fix logcat view
+
+## 0.0.5
+
 - Remove WLogDioInterceptor
 - Fix Defaults FilePath Bug
 - Fix Readme

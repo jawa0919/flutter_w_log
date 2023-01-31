@@ -17,11 +17,14 @@ class WLogDB {
 
   final WLogDao _dao = WLogDao.instance;
 
+  /// 插入一条日志
   void insertLog(String s, DateTime t, Frame f, WLogLevel l) async {
-    final logModel = WLogModel(s: s, t: t, f: f.uri.path, m: f.member, l: l);
+    final logModel = WLogModel(
+        s: s, t: t, f: f.uri.path + ':${f.line ?? 0}', m: f.member, l: l);
     await _dao.insert(logModel);
   }
 
+  /// 寻找一条日志
   Future<List<WLogModel>> findLog([
     DateTime? startTime,
     DateTime? endTime,

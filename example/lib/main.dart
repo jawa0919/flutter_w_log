@@ -1,12 +1,27 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_w_log/flutter_w_log.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  final originalOnError = FlutterError.onError;
+  FlutterError.onError = (errorDetails) {
+    originalOnError?.call(errorDetails);
+    recordError(errorDetails.exception, errorDetails.stack);
+  };
+  runZonedGuarded(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
+      runApp(const MyApp());
+    },
+    (error, stackTrace) {
+      recordError(error, stackTrace);
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -35,9 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    _counter++;
+    setState(() {});
 
     // print("_counter $_counter");
     // printWLog("_counter $_counter");
@@ -56,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              child: const Text("This Log In Line 61"),
+              child: const Text("This Log In Line 73"),
               onPressed: () {
                 WLog.d("This Log In Line 61,you can clink link jump");
               },
@@ -68,6 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 WLog.w("This is Warn Log");
                 WLog.d("This is Debug Log");
                 WLog.i("This is Info Log");
+              },
+            ),
+            ElevatedButton(
+              child: const Text("recordError"),
+              onPressed: () {
+                List<String> list = ['1', '2'];
+                list[3]; // range error
               },
             ),
             ElevatedButton(
@@ -89,12 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ElevatedButton(
-              child: const Text("export all log"),
-              onPressed: () {
-                WLog.allLog2File();
+              child: const Text("export all log and open file"),
+              onPressed: () async {
+                final file = await WLog.allLog2File();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("export all log succeed")),
                 );
+                OpenFile.open(file.path);
               },
             ),
             ElevatedButton(

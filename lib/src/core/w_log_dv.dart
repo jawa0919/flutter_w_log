@@ -20,6 +20,7 @@ class WLogDV {
 
   final _config = WLog.getDefaultConfig().dvConfig;
 
+  /// 展示日志
   void showLog(String s, DateTime t, Frame f, WLogLevel l) {
     String head = "$t";
     if (_config.isWithLevel) head += "-${l.name}";
@@ -27,11 +28,6 @@ class WLogDV {
     if (_config.isWithFileName) head += " ${f.uri.path}";
     if (_config.isWithMethodName) head += " ${f.member}";
     debugPrint(head);
-    // 当日志打印长度超过1000个字符时，自动换行使用log长打印，保证日志内容不丢失
-    if (s.length > 1000) {
-      log(s);
-    } else {
-      debugPrint(s);
-    }
+    log(s);
   }
 }

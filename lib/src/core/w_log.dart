@@ -7,6 +7,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import '../../flutter_w_log.dart';
@@ -24,6 +25,19 @@ void debugPrintWLog(String? message, {int? wrapWidth}) {
   DateTime now = DateTime.now();
   Frame frame = Trace.current().frames[1];
   WLog.d(message ?? "", now: now, frame: frame);
+}
+
+/// 打印3
+void recordError(Object message, StackTrace? stack) {
+  DateTime now = DateTime.now();
+  final frameStr = stack.toString().split("\n");
+  try {
+    Frame frame = Frame.parseVM(frameStr.elementAt(kDebugMode ? 1 : 0));
+    WLog.e(message.toString(), now: now, frame: frame);
+  } catch (e) {
+    Frame frame = Trace.current().frames[1];
+    WLog.e(message.toString(), now: now, frame: frame);
+  }
 }
 
 /// 打印集合

@@ -21,8 +21,10 @@ class AppDatabase {
 
   Completer<Database>? _dbOpenCompleter;
 
+  /// 加密密钥
   String encryptionKey = "";
 
+  /// 加密db
   Future<Database> get database async {
     if (_dbOpenCompleter == null) {
       _dbOpenCompleter = Completer();

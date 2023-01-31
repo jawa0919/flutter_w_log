@@ -52,6 +52,20 @@ WLog.print("_counter $_counter"); // or printWLog("_counter $_counter");
 WLog.debugPrint("_counter $_counter"); //or debugPrintWLog("_counter $_counter");
 ```
 
+`recordError`
+
+```dart
+  runZonedGuarded(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
+      runApp(const MyApp());
+    },
+    (error, stackTrace) {
+      recordError(error, stackTrace);
+    },
+  );
+```
+
 ### Export Log
 
 default `exportPath`

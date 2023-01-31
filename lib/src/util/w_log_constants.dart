@@ -12,7 +12,7 @@ class WLogConstants {
 
   static const STORE_NAME = 'wLogStore';
 
-  static const DB_NAME = 'w_log_db.txt';
+  static const DB_NAME = 'w_log_db.db';
 
   static const FIELD_ID = 'id';
 
