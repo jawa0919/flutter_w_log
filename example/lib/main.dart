@@ -15,7 +15,6 @@ void main() {
   };
   runZonedGuarded(
     () {
-      WidgetsFlutterBinding.ensureInitialized();
       runApp(const MyApp());
     },
     (error, stackTrace) {
