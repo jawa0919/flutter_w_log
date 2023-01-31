@@ -44,18 +44,26 @@ void recordError(Object message, StackTrace? stack) {
 class WLog {
   WLog._();
 
+  /// 配置
   static WLogConfig _config = WLogConfig();
+
+  /// 默认配置
   static WLogConfig getDefaultConfig() {
     return _config;
   }
 
+  /// 适用配置
   static void applyConfig(WLogConfig config) {
     _config = config;
   }
 
+  /// 视图
   static final WLogDV _dv = WLogDV.instance;
+
+  /// 数据库
   static final WLogDB _db = WLogDB.instance;
 
+  /// 打印
   static void print(Object? object) {
     DateTime now = DateTime.now();
     Frame frame = Trace.current().frames[1];
@@ -63,36 +71,42 @@ class WLog {
     d(message, now: now, frame: frame);
   }
 
+  /// 打印
   static void debugPrint(String? message, {int? wrapWidth}) {
     DateTime now = DateTime.now();
     Frame frame = Trace.current().frames[1];
     d(message ?? "", now: now, frame: frame);
   }
 
+  /// 打印d
   static void d(String message, {DateTime? now, Frame? frame}) {
     now ??= DateTime.now();
     frame ??= Trace.current().frames[1];
     _log(message, now, frame, WLogLevel.DEBUG);
   }
 
+  /// 打印i
   static void i(String message, {DateTime? now, Frame? frame}) {
     now ??= DateTime.now();
     frame ??= Trace.current().frames[1];
     _log(message, now, frame, WLogLevel.INFO);
   }
 
+  /// 打印w
   static void w(String message, {DateTime? now, Frame? frame}) {
     now ??= DateTime.now();
     frame ??= Trace.current().frames[1];
     _log(message, now, frame, WLogLevel.WARN);
   }
 
+  /// 打印e
   static void e(String message, {DateTime? now, Frame? frame}) {
     now ??= DateTime.now();
     frame ??= Trace.current().frames[1];
     _log(message, now, frame, WLogLevel.ERROR);
   }
 
+  /// 打印
   static void _log(String s, DateTime t, Frame f, WLogLevel l) {
     if (_config.isEnabled) {
       if (_config.dvConfig.isEnabled) _dv.showLog(s, t, f, l);
@@ -100,6 +114,7 @@ class WLog {
     }
   }
 
+  /// 导出今天日志到文件
   static Future<File> todayLog2File([
     String? filePath,
     List<WLogLevel> levelList = WLogLevel.values,
@@ -113,6 +128,7 @@ class WLog {
     return await log2File(filePath, startTime, endTime, levelList);
   }
 
+  /// 导出所有日志到文件
   static Future<File> allLog2File([
     String? filePath,
     List<WLogLevel> levelList = WLogLevel.values,
@@ -121,6 +137,7 @@ class WLog {
     return await log2File(filePath, null, null, levelList);
   }
 
+  /// 导出时间段日志到文件
   static Future<File> timeLog2File(
     DateTime startTime, [
     DateTime? endTime,
@@ -135,6 +152,7 @@ class WLog {
     return await log2File(filePath, startTime, endTime, levelList);
   }
 
+  /// 导出自定义筛选日志到文件
   static Future<File> log2File(
     String logFilePath, [
     DateTime? startTime,
@@ -152,6 +170,7 @@ class WLog {
     return await _buffer2File(buffer, logFilePath);
   }
 
+  /// 写文件
   static Future<File> _buffer2File(StringBuffer bf, String logFilePath) async {
     final logFile = File(logFilePath);
     await logFile.create(recursive: true);

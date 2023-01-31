@@ -11,10 +11,16 @@ import '../../flutter_w_log.dart';
 
 /// 存储内容全局上下文
 class WLogDB {
+  /// 初始化
   WLogDB._();
+
+  /// 单例
   static final WLogDB _singleton = WLogDB._();
+
+  /// 单例
   static WLogDB get instance => _singleton;
 
+  /// db
   final WLogDao _dao = WLogDao.instance;
 
   /// 插入一条日志

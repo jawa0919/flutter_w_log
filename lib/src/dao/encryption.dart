@@ -10,8 +10,12 @@ import 'dart:convert';
 import 'package:sembast/sembast.dart';
 import 'package:xxtea/xxtea.dart';
 
+/// 加密相关
 class _XXTeaEncoder extends Converter<Object?, String> {
+  /// 加密key
   final String key;
+
+  /// 初始化
   _XXTeaEncoder(this.key);
 
   @override
@@ -19,8 +23,12 @@ class _XXTeaEncoder extends Converter<Object?, String> {
       xxtea.encryptToString(json.encode(input), key)!;
 }
 
+/// 加密相关
 class _XXTeaDecoder extends Converter<String, Object?> {
+  /// 加密key
   final String key;
+
+  /// 初始化
   _XXTeaDecoder(this.key);
 
   @override
@@ -33,10 +41,15 @@ class _XXTeaDecoder extends Converter<String, Object?> {
   }
 }
 
+/// 加密相关
 class _XXTeaCodec extends Codec<Object?, String> {
+  /// 初始化
   late _XXTeaEncoder _encoder;
+
+  /// 初始化
   late _XXTeaDecoder _decoder;
 
+  /// 初始化
   _XXTeaCodec(String password) {
     _encoder = _XXTeaEncoder(password);
     _decoder = _XXTeaDecoder(password);
@@ -49,5 +62,6 @@ class _XXTeaCodec extends Codec<Object?, String> {
   Converter<Object?, String> get encoder => _encoder;
 }
 
+/// 加密
 SembastCodec getXXTeaSembastCodec({required String password}) =>
     SembastCodec(signature: 'xxtea', codec: _XXTeaCodec(password));

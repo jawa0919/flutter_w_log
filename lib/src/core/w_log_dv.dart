@@ -14,10 +14,16 @@ import '../../flutter_w_log.dart';
 
 /// 打印全局上下文
 class WLogDV {
+  /// 初始化
   WLogDV._();
+
+  /// 单例
   static final WLogDV _singleton = WLogDV._();
+
+  /// 单例
   static WLogDV get instance => _singleton;
 
+  /// 配置
   final _config = WLog.getDefaultConfig().dvConfig;
 
   /// 展示日志

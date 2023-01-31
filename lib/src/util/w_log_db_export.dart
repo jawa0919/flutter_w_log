@@ -13,9 +13,12 @@ import 'package:sembast/sembast.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 导出相关
 class WLogDBExport {
+  /// 初始化
   WLogDBExport._();
 
+  /// 导出路径
   static Future<String> get exportPath async {
     Directory? directory;
     if (Platform.isAndroid) {
@@ -26,10 +29,12 @@ class WLogDBExport {
     return join(directory!.path, WLogConstants.DIRECTORY_NAME);
   }
 
+  /// 创建导出路径
   static Future<String> generateFilePath(String fileName) async {
     return join(await exportPath, fileName);
   }
 
+  /// 创建筛选
   static List<Filter> generateFilters([
     DateTime? startTime,
     DateTime? endTime,

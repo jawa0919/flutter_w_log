@@ -9,15 +9,27 @@ enum WLogLevel { DEBUG, INFO, WARN, ERROR }
 
 typedef WLogModelFormatFunc = String Function(WLogModel m);
 
+/// 模型
 class WLogModel {
+  /// 自增id
   int? id;
 
+  /// 时间
   final DateTime? t;
+
+  /// 打印的位置-文件uri-所属行数
   final String? f;
+
+  /// 打印的所属函数
   final String? m;
+
+  /// 级别
   final WLogLevel? l;
+
+  /// 内容
   final String? s;
 
+  /// WLogModel
   WLogModel({
     this.id,
     this.t,
@@ -27,6 +39,7 @@ class WLogModel {
     this.s,
   });
 
+  /// toJson
   Map<String, dynamic> toJson() {
     return {
       't': t?.millisecondsSinceEpoch ?? 0,
@@ -37,6 +50,7 @@ class WLogModel {
     };
   }
 
+  /// fromJson
   static WLogModel fromJson(Map<String, dynamic> json) {
     return WLogModel(
       t: DateTime.fromMillisecondsSinceEpoch(json['t']),
@@ -47,10 +61,12 @@ class WLogModel {
     );
   }
 
+  /// 打印0
   static String defFormatFunc0(WLogModel m) {
     return m.toString();
   }
 
+  /// 打印1
   static String defFormatFunc1(WLogModel m) {
     String time = m.t?.toIso8601String() ?? "";
     String level = m.l?.name ?? "";
@@ -59,6 +75,7 @@ class WLogModel {
     return "|$time|$level|$fileName|$methodName|${m.s}|";
   }
 
+  /// 时间格式化
   static String dateFormat(DateTime time) {
     return time
         .toIso8601String()

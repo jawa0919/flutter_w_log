@@ -14,17 +14,24 @@ import 'package:sembast/sembast_io.dart';
 
 import '../../flutter_w_log.dart';
 
+/// 数据库相关
 class AppDatabase {
+  /// 初始化
   AppDatabase._();
+
+  /// 单例
   static final AppDatabase _singleton = AppDatabase._();
+
+  /// 单例
   static AppDatabase get instance => _singleton;
 
+  /// 完成监听
   Completer<Database>? _dbOpenCompleter;
 
   /// 加密密钥
   String encryptionKey = "";
 
-  /// 加密db
+  /// 加密的db实例
   Future<Database> get database async {
     if (_dbOpenCompleter == null) {
       _dbOpenCompleter = Completer();
@@ -33,6 +40,7 @@ class AppDatabase {
     return _dbOpenCompleter!.future;
   }
 
+  /// 打开文件
   Future _openDatabase() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
     final dbPath = join(appDocumentDir.path, WLogConstants.DB_NAME);

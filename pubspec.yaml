@@ -1,6 +1,6 @@
 name: flutter_w_log
 description: A logging framework developed in fluent provides a fast and simple logging solution. All logs are saved to the database and can be exported as local files.
-version: 0.0.5
+version: 0.0.6
 homepage: https://github.com/jawa0919/flutter_w_log
 
 environment:
