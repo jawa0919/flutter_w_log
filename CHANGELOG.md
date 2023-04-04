@@ -1,3 +1,7 @@
+## 0.0.7
+
+- Add support web
+
 ## 0.0.6
 
 - Add code docs
