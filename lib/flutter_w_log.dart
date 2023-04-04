@@ -5,7 +5,6 @@ export 'src/core/w_log_db.dart';
 export 'src/core/w_log_dv.dart';
 export 'src/core/w_log.dart';
 
-export 'src/dao/app_database.dart';
 export 'src/dao/encryption.dart';
 export 'src/dao/w_log_dao.dart';
 

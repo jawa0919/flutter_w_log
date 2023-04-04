@@ -5,7 +5,7 @@
  * @Description  : w_log_config
  */
 
-import '../../flutter_w_log.dart';
+import '../util/w_log_model.dart';
 
 /// 配置集合
 class WLogConfig {

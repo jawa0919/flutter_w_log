@@ -7,7 +7,9 @@
 
 import 'package:sembast/sembast.dart';
 
-import '../../flutter_w_log.dart';
+import '../util/w_log_constants.dart';
+import '../util/w_log_model.dart';
+import 'w_log_database.dart';
 
 /// 数据库操作类
 class WLogDao {
@@ -20,7 +22,7 @@ class WLogDao {
   /// 单例
   static WLogDao get instance => _singleton;
 
-  /// db
+  /// store
   final _flogsStore = intMapStoreFactory.store(WLogConstants.STORE_NAME);
 
   /// db

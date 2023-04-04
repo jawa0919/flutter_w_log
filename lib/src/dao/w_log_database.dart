@@ -1,4 +1,10 @@
 /*
+ * @FilePath     : /lib/src/dao/w_log_dao.dart
+ * @Date         : 2022-03-11 14:16:28
+ * @Author       : jawa0919 <jawa0919@163.com>
+ * @Description  : w_log_dao
+ */
+/*
  * @FilePath     : /lib/src/dao/app_database.dart
  * @Date         : 2022-03-11 14:12:31
  * @Author       : jawa0919 <jawa0919@163.com>
@@ -6,13 +12,15 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
 
 import '../../flutter_w_log.dart';
+import 'database/app_database.dart';
 
 /// 数据库相关
 class AppDatabase {
@@ -28,9 +36,6 @@ class AppDatabase {
   /// 完成监听
   Completer<Database>? _dbOpenCompleter;
 
-  /// 加密密钥
-  String encryptionKey = "";
-
   /// 加密的db实例
   Future<Database> get database async {
     if (_dbOpenCompleter == null) {
@@ -42,16 +47,17 @@ class AppDatabase {
 
   /// 打开文件
   Future _openDatabase() async {
-    final appDocumentDir = await getApplicationDocumentsDirectory();
+    final appDocumentDir =
+        kIsWeb ? Directory("") : await getApplicationDocumentsDirectory();
     final dbPath = join(appDocumentDir.path, WLogConstants.DB_NAME);
     Database dataBase;
     if (WLog.getDefaultConfig().dbConfig.encryptionEnabled &&
         WLog.getDefaultConfig().dbConfig.encryptionKey.isNotEmpty) {
       final codec = getXXTeaSembastCodec(
           password: WLog.getDefaultConfig().dbConfig.encryptionKey);
-      dataBase = await databaseFactoryIo.openDatabase(dbPath, codec: codec);
+      dataBase = await getDatabaseFactory().openDatabase(dbPath, codec: codec);
     } else {
-      dataBase = await databaseFactoryIo.openDatabase(dbPath);
+      dataBase = await getDatabaseFactory().openDatabase(dbPath);
     }
     _dbOpenCompleter!.complete(dataBase);
   }

@@ -112,11 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text("export all log and open file"),
               onPressed: () async {
-                final file = await WLog.allLog2File();
+                final filePath = await WLog.allLog2File();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("export all log succeed")),
                 );
-                OpenFile.open(file.path);
+                OpenFile.open(filePath);
               },
             ),
             ElevatedButton(

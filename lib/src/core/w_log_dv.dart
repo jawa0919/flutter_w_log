@@ -10,7 +10,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import '../../flutter_w_log.dart';
+import '../util/w_log_model.dart';
+import 'w_log.dart';
 
 /// 打印全局上下文
 class WLogDV {

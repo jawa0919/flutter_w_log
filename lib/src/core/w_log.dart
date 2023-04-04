@@ -5,12 +5,17 @@
  * @Description  : w_log
  */
 
+import 'dart:html' as html;
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import '../../flutter_w_log.dart';
+import '../util/w_log_db_export.dart';
+import '../util/w_log_model.dart';
+import 'w_log_config.dart';
+import 'w_log_db.dart';
+import 'w_log_dv.dart';
 
 /// 打印1
 void printWLog(Object? object) {
@@ -115,7 +120,7 @@ class WLog {
   }
 
   /// 导出今天日志到文件
-  static Future<File> todayLog2File([
+  static Future<String> todayLog2File([
     String? filePath,
     List<WLogLevel> levelList = WLogLevel.values,
   ]) async {
@@ -125,20 +130,22 @@ class WLog {
     final endTime = DateTime.parse("$today 23:59:59");
 
     filePath ??= await WLogDBExport.generateFilePath("WLog_$today.txt");
-    return await log2File(filePath, startTime, endTime, levelList);
+    await log2File(filePath, startTime, endTime, levelList);
+    return filePath;
   }
 
   /// 导出所有日志到文件
-  static Future<File> allLog2File([
+  static Future<String> allLog2File([
     String? filePath,
     List<WLogLevel> levelList = WLogLevel.values,
   ]) async {
     filePath ??= await WLogDBExport.generateFilePath("WLog_all.txt");
-    return await log2File(filePath, null, null, levelList);
+    await log2File(filePath, null, null, levelList);
+    return filePath;
   }
 
   /// 导出时间段日志到文件
-  static Future<File> timeLog2File(
+  static Future<String> timeLog2File(
     DateTime startTime, [
     DateTime? endTime,
     String? filePath,
@@ -149,11 +156,12 @@ class WLog {
         "${WLogModel.dateFormat(startTime)}_${WLogModel.dateFormat(endTime)}";
 
     filePath ??= await WLogDBExport.generateFilePath("WLog_$name.txt");
-    return await log2File(filePath, startTime, endTime, levelList);
+    await log2File(filePath, startTime, endTime, levelList);
+    return filePath;
   }
 
   /// 导出自定义筛选日志到文件
-  static Future<File> log2File(
+  static Future<void> log2File(
     String logFilePath, [
     DateTime? startTime,
     DateTime? endTime,
@@ -167,7 +175,8 @@ class WLog {
         buffer.write("\n");
       }
     }
-    return await _buffer2File(buffer, logFilePath);
+    if (kIsWeb) await _buffer2FileForWeb(buffer, logFilePath);
+    await _buffer2File(buffer, logFilePath);
   }
 
   /// 写文件
@@ -175,5 +184,14 @@ class WLog {
     final logFile = File(logFilePath);
     await logFile.create(recursive: true);
     return await logFile.writeAsString('$bf');
+  }
+
+  /// 写文件
+  static Future<void> _buffer2FileForWeb(
+      StringBuffer bf, String logFilePath) async {
+    var blob = html.Blob(['$bf'], 'text/plain', 'native');
+    html.AnchorElement(href: html.Url.createObjectUrlFromBlob(blob))
+      ..setAttribute("download", logFilePath)
+      ..click();
   }
 }

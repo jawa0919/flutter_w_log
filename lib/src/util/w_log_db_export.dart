@@ -7,11 +7,13 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 
-import '../../flutter_w_log.dart';
+import 'w_log_constants.dart';
+import 'w_log_model.dart';
 
 /// 导出相关
 class WLogDBExport {
@@ -21,6 +23,7 @@ class WLogDBExport {
   /// 导出路径
   static Future<String> get exportPath async {
     Directory? directory;
+    if (kIsWeb) return join("", WLogConstants.DIRECTORY_NAME);
     if (Platform.isAndroid) {
       directory = await getExternalStorageDirectory();
     } else {
