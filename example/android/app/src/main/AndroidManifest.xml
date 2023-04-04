@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="top.jawa0919.flutter_w_log_example">
+    package="com.example.example">
    <application
-        android:label="flutter_w_log_example"
+        android:label="example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
