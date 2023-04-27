@@ -5,12 +5,10 @@
  * @Description  : w_log
  */
 
-import 'dart:html' as html;
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+import '../dao/database/app_database.dart';
 import '../util/w_log_db_export.dart';
 import '../util/w_log_model.dart';
 import 'w_log_config.dart';
@@ -175,23 +173,6 @@ class WLog {
         buffer.write("\n");
       }
     }
-    if (kIsWeb) await _buffer2FileForWeb(buffer, logFilePath);
-    await _buffer2File(buffer, logFilePath);
-  }
-
-  /// 写文件
-  static Future<File> _buffer2File(StringBuffer bf, String logFilePath) async {
-    final logFile = File(logFilePath);
-    await logFile.create(recursive: true);
-    return await logFile.writeAsString('$bf');
-  }
-
-  /// 写文件
-  static Future<void> _buffer2FileForWeb(
-      StringBuffer bf, String logFilePath) async {
-    var blob = html.Blob(['$bf'], 'text/plain', 'native');
-    html.AnchorElement(href: html.Url.createObjectUrlFromBlob(blob))
-      ..setAttribute("download", logFilePath)
-      ..click();
+    await buffer2File(buffer, logFilePath);
   }
 }

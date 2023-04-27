@@ -1,3 +1,7 @@
+## 0.0.8
+
+- Fix platform support error
+
 ## 0.0.7
 
 - Add support web

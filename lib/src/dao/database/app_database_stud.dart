@@ -9,6 +9,9 @@ import 'package:sembast/sembast.dart';
 
 DatabaseFactory getDatabaseFactory() => _stub('getDatabaseFactory()');
 
+Future<void> buffer2File(StringBuffer bf, String logFilePath) =>
+    _stub('buffer2File()');
+
 T _stub<T>(String message) {
   throw UnimplementedError(message);
 }

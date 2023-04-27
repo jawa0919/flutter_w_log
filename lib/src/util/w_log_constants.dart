@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /*
  * @FilePath     : /lib/util/w_log_constants.dart
  * @Date         : 2022-03-11 14:08:10
@@ -17,7 +19,7 @@ class WLogConstants {
   static const STORE_NAME = 'wLogStore';
 
   /// 数据库名称
-  static const DB_NAME = 'w_log_db.db';
+  static const DB_NAME = 'w_log.db';
 
   /// 字段id
   static const FIELD_ID = 'id';
