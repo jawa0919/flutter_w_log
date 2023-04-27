@@ -6,7 +6,7 @@ Language: [English](README.md) | [中文简体](README_zh.md)
 
 Simple logging scheme. Quickly locate the location of the log code, save the log for a long time, and export it to a file conveniently
 
-![home01](./docs/img/home01.gif)
+![home01](./doc/img/home01.gif)
 
 ## Features
 
@@ -121,7 +121,7 @@ ScaffoldMessenger.of(context).showSnackBar(
 );
 ```
 
-![exportLog01](./docs/img/exportLog01.gif)
+![exportLog01](./doc/img/exportLog01.gif)
 
 ### Config
 

@@ -6,7 +6,7 @@
 
 简单可靠的日志方案。快速定位日志代码的位置，持久保存日志，便捷将其导出为文件
 
-![home01](./docs/img/home01.gif)
+![home01](./doc/img/home01.gif)
 
 ## 特色
 
@@ -126,7 +126,7 @@ ScaffoldMessenger.of(context).showSnackBar(
 );
 ```
 
-![exportLog01](./docs/img/exportLog01.gif)
+![exportLog01](./doc/img/exportLog01.gif)
 
 ### 配置
 
