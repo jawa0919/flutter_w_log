@@ -1,3 +1,7 @@
+## 0.0.9
+
+- Fix log wrapWidth
+
 ## 0.0.8
 
 - Fix platform support error

@@ -36,6 +36,9 @@ class WLogDVConfig {
   /// 是否打印log的所在函数名
   bool isWithMethodName;
 
+  /// 部分平台的超长打印log会丢失数据 默认 1024
+  int debugPrintWrapWidth;
+
   /// 初始化
   WLogDVConfig({
     required this.isEnabled,
@@ -43,6 +46,7 @@ class WLogDVConfig {
     required this.isWithFrame,
     required this.isWithFileName,
     required this.isWithMethodName,
+    required this.debugPrintWrapWidth,
   });
 
   /// 默认
@@ -52,6 +56,7 @@ class WLogDVConfig {
     isWithFrame: true,
     isWithFileName: false,
     isWithMethodName: false,
+    debugPrintWrapWidth: 1024,
   );
 }
 

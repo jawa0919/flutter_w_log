@@ -5,9 +5,7 @@
  * @Description  : w_log_dv
  */
 
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 import '../util/w_log_model.dart';
@@ -28,13 +26,25 @@ class WLogDV {
   final _config = WLog.getDefaultConfig().dvConfig;
 
   /// 展示日志
-  void showLog(String s, DateTime t, Frame f, WLogLevel l) {
+  void showLog(String s, DateTime t, Frame f, WLogLevel l, {int? wrapWidth}) {
     String head = "$t";
     if (_config.isWithLevel) head += "-${l.name}";
     if (_config.isWithFrame) head += " ${f.location}";
     if (_config.isWithFileName) head += " ${f.uri.path}";
     if (_config.isWithMethodName) head += " ${f.member}";
     debugPrint(head);
-    log(s);
+
+    if (wrapWidth != null) {
+      debugPrint(s, wrapWidth: wrapWidth);
+      return;
+    }
+    if (s.length > _config.debugPrintWrapWidth &&
+        defaultTargetPlatform == TargetPlatform.android) {
+      debugPrint("==Long String Print T${t.microsecondsSinceEpoch}======Start");
+      debugPrint(s, wrapWidth: _config.debugPrintWrapWidth);
+      debugPrint("==Long String Print T${t.microsecondsSinceEpoch}========End");
+      return;
+    }
+    debugPrint(s);
   }
 }

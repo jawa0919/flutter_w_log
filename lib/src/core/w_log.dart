@@ -71,14 +71,14 @@ class WLog {
     DateTime now = DateTime.now();
     Frame frame = Trace.current().frames[1];
     String message = "$object";
-    d(message, now: now, frame: frame);
+    _log(message, now, frame, WLogLevel.DEBUG);
   }
 
   /// 打印
   static void debugPrint(String? message, {int? wrapWidth}) {
     DateTime now = DateTime.now();
     Frame frame = Trace.current().frames[1];
-    d(message ?? "", now: now, frame: frame);
+    _log(message ?? "", now, frame, WLogLevel.DEBUG, wrapWidth: wrapWidth);
   }
 
   /// 打印d
@@ -110,9 +110,17 @@ class WLog {
   }
 
   /// 打印
-  static void _log(String s, DateTime t, Frame f, WLogLevel l) {
+  static void _log(
+    String s,
+    DateTime t,
+    Frame f,
+    WLogLevel l, {
+    int? wrapWidth,
+  }) {
     if (_config.isEnabled) {
-      if (_config.dvConfig.isEnabled) _dv.showLog(s, t, f, l);
+      if (_config.dvConfig.isEnabled) {
+        _dv.showLog(s, t, f, l, wrapWidth: wrapWidth);
+      }
       if (_config.dbConfig.isEnabled) _db.insertLog(s, t, f, l);
     }
   }

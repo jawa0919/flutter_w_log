@@ -140,6 +140,7 @@ _conf.dvConfig.isWithLevel = true; // print Level
 _conf.dvConfig.isWithFrame = true; // print Link
 _conf.dvConfig.isWithFileName = false; // print File Name
 _conf.dvConfig.isWithMethodName = false; // print Method Name
+_conf.dvConfig.debugPrintWrapWidth = 1024; // print Wrap Width
 
 _conf.dbConfig.isEnabled = true;
 _conf.dbConfig.encryptionEnabled = false;
