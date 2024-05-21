@@ -2,7 +2,7 @@
 
 [![Pub package](https://img.shields.io/pub/v/flutter_w_log.svg)](https://pub.dartlang.org/packages/flutter_w_log) [![GitHub issues](https://img.shields.io/github/issues/jawa0919/flutter_w_log)](https://github.com/jawa0919/flutter_w_log/issues)
 
-语言: [English](README.md) | [中文简体](README_zh.md)
+Language: [English](README.md) | [中文简体](README_zh.md)
 
 A simple and reliable logging solution. Quick positioning, persistent storage, and convenient export.
 
@@ -17,7 +17,7 @@ dependencies:
   #####
 ```
 
-## 特色
+## Features
 
 - [x] Quick localization: The console log contains a line count link, which can be directly clicked to locate the code location. It supports `VSCode`/`AndroidStudio`
 - [x] Extra long log: When the log length exceeds 999 characters, it will automatically wrap to ensure that the log content is not lost

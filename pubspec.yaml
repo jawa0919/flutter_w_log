@@ -11,6 +11,10 @@ screenshots:
     path: docs/img/as.png
   - description: "Examples is running vscode"
     path: docs/img/vscode.png
+  - description: "Examples is running androd"
+    path: docs/img/and.png
+  - description: "Examples is running ios"
+    path: docs/img/ios.png
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
