@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '_w_log_database.dart';
 import 'w_log_dto.dart';
@@ -53,6 +54,12 @@ class _WLogMonitorPageState extends State<WLogMonitorPage> {
           itemBuilder: (c, i) {
             return InkWell(
               child: Text(_list[i].formatMinLine),
+              onLongPress: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('copy success to clipboard')),
+                );
+                Clipboard.setData(ClipboardData(text: _list[i].s));
+              },
             );
           },
           separatorBuilder: (c, i) => Divider(),
