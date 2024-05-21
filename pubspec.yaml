@@ -1,0 +1,38 @@
+name: flutter_w_log
+description: A simple and reliable logging solution. Quick positioning, persistent storage, and convenient export.
+version: 0.1.0
+
+homepage: https://github.com/jawa0919/flutter_w_log
+repository: https://github.com/jawa0919/flutter_w_log
+issue_tracker: https://github.com/jawa0919/flutter_w_log/issues
+
+screenshots:
+  - description: "Examples is running as"
+    path: docs/img/as.png
+  - description: "Examples is running vscode"
+    path: docs/img/vscode.png
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  stack_trace: ">=1.0.0 <2.0.0"
+  sembast: ">=3.0.0 <4.0.0"
+  sembast_web: ">=2.0.0 <3.0.0"
+  path_provider: ">=2.0.0 <3.0.0"
+  path: ">=1.0.0 <2.0.0"
+  xxtea: ">=2.0.0 <3.0.0"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+topics:
+  - log
+  - print
+
+flutter:
